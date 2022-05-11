@@ -3,6 +3,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include "IN_script.h"
 
 int in(void)
 {
