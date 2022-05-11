@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int main(void)
+int in(void)
 {
     // Fitxategiaren izena definitu
     const char *filename = "input.txt";

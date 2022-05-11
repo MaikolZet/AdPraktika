@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int main(void)
+int out(void)
 {
     // Fitxategiaren izena definitu
     const char *filename = "output.txt";
@@ -20,7 +20,6 @@ int main(void)
     // Hasieraketa guztiak
     char *contents = NULL;
     size_t len = 0;
-    int i = 0;
 
     // getline funtzioak irakurritako lerroaren luzeera bueltatzen du
     // eta -1 bada, orduan errorea!
@@ -29,7 +28,7 @@ int main(void)
         //&contents-ekin egin behar dugu lana, hori da String-a
         printf("%s", contents);
     }
-
+    printf("\n");
     // Bukatzerakoan fitxategia itxi eta rekursoak liberatu
     fclose(input_file);
     free(contents);
