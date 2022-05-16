@@ -8,7 +8,7 @@
 int out(void)
 {
     // Fitxategiaren izena definitu
-    const char *filename = "output.txt";
+    const char *filename = "grafoak/gp_7n16a.txt";
 
     // Fitxategia ireki fopen-ekin
     FILE *input_file = fopen(filename, "r");

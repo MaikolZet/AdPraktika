@@ -1,7 +1,7 @@
 CFLAGS=-Wall
 CPPFLAGS=
 CC= g++
-SOURCES= IN_script.c OUT_script.c main.c Prim.c
+SOURCES= IN_script.c OUT_script.c main.c Prim.c 
 
 all: exek proba
 
@@ -10,7 +10,7 @@ all: exek proba
 clean:
 	rm exek
 
-exek: $(SOURCES) Lag.h
+exek: $(SOURCES) 
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $(SOURCES)
 
 proba:
