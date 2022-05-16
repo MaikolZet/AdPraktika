@@ -4,9 +4,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "IN_script.h"
-#include "Prim.h"
 
-int in(void)
+//Solucion de mierda ezin da modu globalean utxik utzi eta listak zenbat dittun jakitteko ezinbestekoa da irakurtzea artxiboa
+Node lista[10000];
+
+Node* in(void)
 {
     // Fitxategiaren izena definitu
     const char *filename = "grafoak/gp_7n16a.txt";
@@ -21,102 +23,110 @@ int in(void)
 
     // Fitxategiaren luzeera kalkulatzeko
     fseek(input_file, 0L, SEEK_END);
-    const int SZ = ftell(input_file);
     fseek(input_file, 0L, SEEK_SET);
 
     // Hasieraketa guztiak
     char *contents = NULL;
     size_t len = 0;
-    int i, lehen_buelta=0;
-    float a=0.0;
-
-
-    //Lehen lerroa irakurtzen da linkedlista hasieratzeko
-    getline(&contents, &len, input_file); 
+    int i, a, v = -1;
+    float pisua = 0.0;
+    // Lehen lerroa irakurtzen da linkedlista hasieratzeko
+    getline(&contents, &len, input_file);
     printf("%s \n", contents);
-    
-    char str[strlen(contents)] ;
+
+    char str[strlen(contents)];
     strcpy(str, contents);
-    int init_size = strlen(str);
     char delim[] = " ";
 
     char *ptr = strtok(str, delim);
-    a=atof(ptr);
+    a = atoi(ptr);
 
-    //linkedlist-aren hasieraketa
-    Node lista[(int)a];
+    // linkedlist-aren hasieraketa
+    for (int j = 0; j < a; j++)
+    {
+        lista[j].data = -1;
+        lista[j].next = 0;
+    }
+    Node *lag;
+    getline(&contents, &len, input_file);
+    // loop honetan 3. lerrotik aurrera irakurtzen da!
 
-   //loop honetan 3. lerrotik aurrera irakurtzen da!
-    while ((getline(&contents, &len, input_file) != -1) && (i <= SZ))
-    {   
-        if (lehen_buelta!=0){
-            char str[strlen(contents)] ;
-            strcpy(str, contents);
-            int init_size = strlen(str);
-            char delim[] = " ";
+    while ((getline(&contents, &len, input_file) != -1))
+    {
 
-            char *ptr = strtok(str, delim);
-
-            while(ptr != NULL)
-            {
-                printf("'%s'\n", ptr);
-                a=atof(ptr);
-                ptr = strtok(NULL, delim);
-            }
-
-        }else{
-           lehen_buelta++; 
+        strcpy(str, contents);
+        ptr = strtok(str, delim);
+        if (v != atoi(ptr))
+        {
+            lag = 0;
         }
+        v = atoi(ptr);
+        ptr = strtok(NULL, delim);
+        i = atoi(ptr);
+        ptr = strtok(NULL, delim);
+        pisua = atof(ptr);
+        if (lag != 0)
+        {
+            lag->next = (Node *)malloc(sizeof(Node));
+            lag = lag->next;
+        }
+        else
+        {
+            lag = &lista[v];
+            lag->next = (Node *)malloc(sizeof(Node));
+            lag = lag->next;
+        }
+        lag->data = i;
+        lag->weight = pisua;
+        lag->next = 0;
     }
 
+    for (int j = 0; j < a; j++)
+    {
 
-
-    //====== HEMENDIK AURRERA LANA EGIN DAITEKE strs BEKTOREAREKIN =========
-    //
-    //			Sartu zure kodigoa hemen
-    //
-    //    Emaitza guztiak fitxategi batean jasotzen joango nintzateke
-    //    exekuzio denbora ondo kontrolatzeko (adibidez, Output.txt)
-    //    eta gero printOut-ak aparte egingo nituzke OUT_script-arekin.
-    //
-    //======================================================================
-
-    
-    // Bukatzerakoan fitxategia itxi eta rekursoak liberatu
+        printf("Nodo honetatik: %d Hauetara joan daiteke ", j);
+        lag = &lista[j];
+        printf("%d , ", lag->data);
+        lag = lag->next;
+        while (lag != 0)
+        {
+            printf("%d , ", lag->data);
+            lag = lag->next;
+        }
+        printf("\n");
+    }
     fclose(input_file);
     free(contents);
-
-    exit(EXIT_SUCCESS);
+    return &lista[0];
 }
 
+int geta(){
+    // Fitxategiaren izena definitu
+    const char *filename = "grafoak/gp_7n16a.txt";
 
-int in2()
-{
-    //1
-    FILE *filePointer;
-    char ch;
+    // Fitxategia ireki fopen-ekin
+    FILE *input_file = fopen(filename, "r");
 
-    //2
-    filePointer = fopen("grafoak/gp_7n16a.txt", "r");
+    // Fitxategirik ezin bada ireki (izena gaizki dagoelako adibidez)
+    // Errorea bueltatu
+    if (!input_file)
+        exit(EXIT_FAILURE);
 
-    //3
-    if (filePointer == NULL)
-    {
-        printf("File is not available \n");
-    }
-    else
-    {
-        //4
-        while ((ch = fgetc(filePointer)) != EOF)
-        {   //if(ch!=" " || ch!="\n"){
-                printf("%c", ch);
-            //}
-        }
-    }
+    // Fitxategiaren luzeera kalkulatzeko
+    fseek(input_file, 0L, SEEK_END);
+    fseek(input_file, 0L, SEEK_SET);
 
-    //5
-    fclose(filePointer);
+    // Hasieraketa guztiak
+    char *contents = NULL;
+    size_t len = 0;
+    // Lehen lerroa irakurtzen da linkedlista hasieratzeko
+    getline(&contents, &len, input_file);
+    printf("%s \n", contents);
 
-    return 0;
+    char str[strlen(contents)];
+    strcpy(str, contents);
+    char delim[] = " ";
+
+    char *ptr = strtok(str, delim);
+    return atoi(ptr);
 }
-
