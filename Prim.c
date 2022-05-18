@@ -64,7 +64,7 @@ void PRIM (int p, ertzPisuPos hzm []){
         }
 
     // k harrapatzen du hzm-k;
-    ErantsiErt(hzm, k, &Auzokide[k], &PisuMin[k], sLuz );
+    ErantsiErt(hzm, k, &Auzokide[k], &PisuMin[k], sLuz);
     
     // ≅sErt[sLuz]=(k,Auzokide[k], PisuMin[k])
     PisuMin[k]= -1;
