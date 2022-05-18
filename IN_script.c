@@ -4,11 +4,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "IN_script.h"
-
+#include "lag.h"
 //Solucion de mierda ezin da modu globalean utxik utzi eta listak zenbat dittun jakitteko ezinbestekoa da irakurtzea artxiboa
 Node lista[10000];
 
-Node* in(void)
+int in(void)
 {
     // Fitxategiaren izena definitu
     const char *filename = "grafoak/gp_7n16a.txt";
@@ -65,6 +65,7 @@ Node* in(void)
         i = atoi(ptr);
         ptr = strtok(NULL, delim);
         pisua = atof(ptr);
+        //printf("======%s, %f====== \n",ptr, pisua);
         if (lag != 0)
         {
             lag->next = (Node *)malloc(sizeof(Node));
@@ -81,23 +82,25 @@ Node* in(void)
         lag->next = 0;
     }
 
-    for (int j = 0; j < a; j++)
-    {
 
-        printf("Nodo honetatik: %d Hauetara joan daiteke ", j);
-        lag = &lista[j];
-        printf("%d , ", lag->data);
-        lag = lag->next;
-        while (lag != 0)
-        {
-            printf("%d , ", lag->data);
-            lag = lag->next;
-        }
-        printf("\n");
-    }
+    //PRINT-AK ikusteko deskomentatu hau
+    // for (int j = 0; j < a; j++)
+    // {   
+    //     printf("Nodo honetatik: %d Hauetara joan daiteke ", j);
+    //     lag = &lista[j];
+    //     printf("(%d eta %f) , ",lag->data, lag->weight);
+    //     lag = lag->next;
+    //     while (lag != 0)
+    //     {
+    //         printf("(%d eta %f) , ",lag->data, lag->weight);
+    //         lag = lag->next;
+    //     }
+    //     printf("\n");
+    // }
+
     fclose(input_file);
     free(contents);
-    return &lista[0];
+    return a;
 }
 
 int geta(){

@@ -1,9 +1,12 @@
 #ifndef LAG_H_
 #define LAG_H_
 
+#define OUR_FLT_MAX 3.402823466e+38F
+
 struct ertzPisuPos{
-    int pisua;
-    int posizioa;
+    int A;
+    int B;
+    float weight;
 };
 typedef ertzPisuPos ertzPisuPos;
 
@@ -26,6 +29,7 @@ typedef Node2 Node2;
 
 //PRIM-ekin Ibiltzeko NODE erabilita
 int searchElement(struct Node* head, int item);
+float mysearchElement(struct Node* head, int item);
 void insert(struct Node** head, int data);
 void display(struct Node* node);
 

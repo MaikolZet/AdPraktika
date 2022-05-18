@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "Prim.h"
+#include "lag.h"
 
 //METROPOLISA
 
@@ -29,60 +30,108 @@ Sarrerako .txt adibide bat:
     
 */
 
+extern Node lista[];
 
 void PRIM (int p, ertzPisuPos hzm []){
-
-    //Gero berez matrize hau parametro bezela pasa beahr deu
-    int G[30][30];
     
-    int PisuMin[p], 
-    Auzokide[p];
+    //Auzokide[p] ertz bektore bat da: p nodotik, Auzokide[p]-ra joateko ertza
+    int Auzokide[p];
+    //Auzokide[p] bektoreko ertzei dagokien pisua biltzen duen bektorea
+    float PisuMin[p]; 
 
-    int k, ind, j, z, minP, sLuz=0; // = MultzoHutsaErt (hzm);
-    
+    int k, ind, j, z, sLuz=0; // = MultzoHutsaErt (hzm);
+    float minP=0.0;
     //Lehen erpina kanpoan hasieratu??
     PisuMin[0]=-1;
     
     for (k=1; k<p; k++){
         //ERT-ko lehen erpina 0 da. Besteek haraino duten distantziaz hasieratu        
         Auzokide[k]= 0; 
-        PisuMin[k] = G[k][0]; 
+        
+        //Zaharra:
+        //PisuMin[k] = G[k][0]; 
+
+        //Berria:
+        //Simetrikotasun errorea Maikol
+        PisuMin[k] = mysearchElement(&lista[0], k);
+        printf("Pisumin[%d]: %f \n",k, PisuMin[k]);
+
+        
     }
 
     for (sLuz=0; sLuz<(p-1); sLuz++) {// #(p-1) aldiz
         
         //Balio maximoarekin hasieratu minP
-        minP = __INT_MAX__;
+        minP = __FLT_MAX__;
+        printf("minP: %d \n", minP);
 
         for (j=1; j<p; j++){ // 1..p-1
             
             //minimoa bilatu eta posizioa K-n gorde
-            if (PisuMin[j]>-1 && PisuMin[j] < minP){
+            if (-1<PisuMin[j] && PisuMin[j] < minP){
                 minP=PisuMin[j]; 
                 k=j;
             }
         }
 
-    // k harrapatzen du hzm-k;
-    ErantsiErt(hzm, k, &Auzokide[k], &PisuMin[k], sLuz);
-    
-    // ≅sErt[sLuz]=(k,Auzokide[k], PisuMin[k])
-    PisuMin[k]= -1;
-    
-    for (z=1; z<p; z++ ){ //k-ren auzokideeak direnak
+        //K. nodotik, Auzokide[k]-ra joateko ertza eta honen pisua (Pisumin[K])
+        //gordetzen duen funtzioa. Hzm-n gordeko da (soluzio bektorea) //sLuz zertarako??
+        //ErantsiErt(hzm, k, &Auzokide[k], &PisuMin[k], sLuz);
         
-        if (G[k][j]<PisuMin[z]) {
-            
-            PisuMin[z]= G[k][z]; Auzokide[z]=k; 
+        hzm[sLuz].A=k;
+        hzm[sLuz].B=Auzokide[k];
+        hzm[sLuz].weight=PisuMin[k];
+        
+        printf("KONTUZ!! from %d to %d, with weight: %f \n", k, Auzokide[k], PisuMin[k]);
+        
+        // ≅sErt[sLuz]=(k,Auzokide[k], PisuMin[k])
+        PisuMin[k]= -1;
+        
+        int handiena=0, txikiena=0;
+        if (k>j){
+            handiena=k;
+            txikiena=j;
+        }else{
+            handiena=j;
+            txikiena=k;
         }
-    }
+
+
+        for (z=1; z<p; z++ ){ //k-ren auzokideeak direnak
+            // //Zaharra:
+            // if (G[k][j]<PisuMin[z]) {
+            //     PisuMin[z]= G[k][z]; 
+            //     Auzokide[z]=k; 
+            // }
+            
+            //Berria:
+            //Simetrikotasun arazoa Maikol
+            
+            
+            //Simetrikotasun arazoa Maikol
+            if (mysearchElement(&lista[txikiena], handiena) < PisuMin[z]) {
+                
+                int handienaZ=0, txikienaZ=0;
+                if (k>z){
+                    handienaZ=k;
+                    txikienaZ=z;
+                }else{
+                    handienaZ=z;
+                    txikienaZ=k;
+                }
+                
+                PisuMin[z]= mysearchElement(&lista[txikienaZ], handienaZ); 
+                Auzokide[z]=k; 
+            }
+        }
     }
 }
 
-void ErantsiErt(ertzPisuPos hzm [], int k, int Auzokide [], int PisuMin [], int sluz){
-    //TODO
+void ErantsiErt(ertzPisuPos hzm [], int k, int Auzokide [], float PisuMin [], int sluz){
+   return;
 }
 
 void main2(void){
-    printf("Auxilio");
+    float a = mysearchElement(&lista[0], 14);
+    printf("%f \n", a);
 }

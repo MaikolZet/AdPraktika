@@ -22,6 +22,33 @@ int searchElement(struct Node* head, int item)
     return -1;
 }
 
+float mysearchElement(struct Node* head, int item)
+{
+    struct Node* current = head;  // Initialize current
+    int index = 0;
+    // traverse till then end of the linked list
+    while (current != NULL)
+    {   
+        if (current->data < item){
+            current = current->next;
+            index++;
+            continue;
+        }
+        else if (current->data == item){
+            return current->weight;
+        }
+        else if (current->data > item)
+        {
+            return __FLT_MAX__;
+        }
+        
+    }
+
+
+    
+    return __FLT_MAX__;
+}
+
 void insert(struct Node** head, int data){
 
     struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
