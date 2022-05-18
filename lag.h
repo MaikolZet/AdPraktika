@@ -14,4 +14,10 @@ struct Node {
 };
 typedef Node Node;
 
+int searchElement(struct Node* head, int item);
+
+void insert(struct Node** head, int data);
+
+void display(struct Node* node);
+
 #endif
