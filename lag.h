@@ -1,3 +1,6 @@
+#ifndef LAG_H_
+#define LAG_H_
+
 struct ertzPisuPos{
     int pisua;
     int posizioa;
@@ -10,3 +13,5 @@ struct Node {
     struct Node* next;
 };
 typedef Node Node;
+
+#endif

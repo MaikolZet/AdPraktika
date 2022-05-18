@@ -130,3 +130,4 @@ int geta(){
     char *ptr = strtok(str, delim);
     return atoi(ptr);
 }
+

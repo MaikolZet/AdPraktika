@@ -1,7 +1,7 @@
 CFLAGS=-Wall
 CPPFLAGS=
 CC= g++
-SOURCES= IN_script.c OUT_script.c main.c Prim.c 
+SOURCES= IN_script.c OUT_script.c main.c Prim.c lag.c
 
 all: exek proba
 
