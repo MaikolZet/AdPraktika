@@ -27,6 +27,13 @@ struct Node2 {
 };
 typedef Node2 Node2;
 
+struct ertz {
+    int A;
+    int B;
+    int weight;  
+};
+typedef ertz ertz;
+
 //PRIM-ekin Ibiltzeko NODE erabilita
 int searchElement(struct Node* head, int item);
 float mysearchElement(struct Node* head, int item);
