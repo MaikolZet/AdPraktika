@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "Kruskal.h"
+#include "lag.h"
 
-//METROPOLISA
+// METROPOLISA
 
 /*Metropolis hiriko Trafiko Sailak zenbait kaleetan zehar konponketa lanak egitea erabaki du. Baina lan
 hauek aurrera emateko trafikoa etetea beharrezkoa da konponketak egiten ari diren kaleetan zehar.
@@ -10,12 +11,12 @@ atxikigarriak izan behar dutela jakinik eta trafiko fluxu ahalik eta handiena ut
 Adi: Zein da problema honetan funtzio hautesle zuzena?
 
 Sarrera: Sarrerako datuak testuzko fitxategi batean metatu behar dira jarraiko formatua izango duena:
-    
-    • Lehenengo lerroan n zenbaki osoko positiboa, (n≤10 6): ===>  grafoak dituen erpin kopurua adierazten du.    
+
+    • Lehenengo lerroan n zenbaki osoko positiboa, (n≤10 6): ===>  grafoak dituen erpin kopurua adierazten du.
     • Bigarrengo lerroan a zenbaki osoko positiboa, (a≤108): ===>  grafoak dituen ertz kopurua adierazten du.
     • Hurrengo a lerroetan, 3 zenbaki:
         o Lehenengo biak ===> (x,y) ertza adierazten dute.
-        o Hirugarrengoa  ===> (x,y) ertzari dagokion pisua adieraziko du. 
+        o Hirugarrengoa  ===> (x,y) ertzari dagokion pisua adieraziko du.
 
 Sarrerako .txt adibide bat:
 
@@ -23,66 +24,119 @@ Sarrerako .txt adibide bat:
     16
     0 1 0.15     1 2 4.52    2 3 12.1   3 4 3.45    4 5 5.43   5 6 12.5
     0 2 0.87     1 3 5.8     2 4 3.6    3 5 9.21
-    0 3 4.4      1 4 9.65    2 5 2.0      
+    0 3 4.4      1 4 9.65    2 5 2.0
     0 4 1.3      1 5 12.2
     0 5 5.9
-    
+
+a: #ertz; p: #erpin
 */
 
+/*
+PisuenGoranzkoOrdenaJarraituzOrdenatu(G, a, gEO); eginda ekarri
+ertzOrdenatuak--> ertzen zerrenda ordenatua pisuarekiko
+*/
 
-void KRUSKAL (int p, ertzPisuPos hzm []){
+void KRUSKAL(int ertzKop, int erpinKop, Node2 ertzOrdenatuak)
+{
+    int sErtzKop = 0, xBarne, yBarne, erpinx, erpiny;
+    float pisua;
+    /*Node2 hzm = NULL;*/
+    ertz emaitz[ertzKop];
+    struct Node2 *iteratzaile = malloc(sizeof(struct Node2));
+    iteratzaile = ertzOrdenatuak;
+    //Hasieratu partiketa {-1, -1, ... , -1} izan dadin memorian
+    int Partiketa[erpinKop];
+    memset(Partiketa, -1, erpinKop*sizeof(int));
 
-    //Gero berez matrize hau parametro bezela pasa beahr deu
-    int G[30][30];
-    
-    int PisuMin[p], 
-    Auzokide[p];
+    while (sErtzKop != ertzKop - 1)
+    {
+        //Nodoa iteratu, hurrengoa eta hurrengoa lortu arte.NULL izan arte.
+        //Horrela lortu dezakgu listako hurrengo ertz pisu gutxienekoa, bere ezaugarri guztiekin. Pisua baita!
+        //Denbora kostu minimoarekin
+        erpinx = iteratzaile->A;
+        erpiny = iteratzaile->B;
+        pisua = iteratzaile->weight;
 
-    int k, ind, j, z, minP, sLuz=0; // = MultzoHutsaErt (hzm);
-    
-    //Lehen erpina kanpoan hasieratu??
-    PisuMin[0]=-1;
-    
-    for (k=1; k<p; k++){
-        //ERT-ko lehen erpina 0 da. Besteek haraino duten distantziaz hasieratu        
-        Auzokide[k]= 0; 
-        PisuMin[k] = G[k][0]; 
+        xBarne = BILATU3(Partiketa, erpinx);
+        yBarne = BILATU3(Partiketa, erpiny);
+        if (yBarne != xBarne)
+        {
+            BATERATU3(&Partiketa, xBarne, yBarne);
+            /*ErantsiErt(&hzm, erpinx, erpiny);// logikoki: hzm[sErtzKop]=(erpinx,erpiny);*/
+            ErantsiErt(&emaitz,sErtzKop, erpinx, erpiny, pisua);
+            sErtzKop++;
+        }
+        iteratzaile = iteratzaile->next;
     }
+}
 
-    for (sLuz=0; sLuz<(p-1); sLuz++) {// #(p-1) aldiz
+//KRUSKAL funtzioko emaitz aldagaian egin behar dira aldaketak
+//C-n ez dakidanez programatzen ez dakit modu hontan gordeko diren behar diren aldaketak.
+void ErantsiErt(ertz * emaitz[], int k, int erpinx, int erpiny, float pisua)
+{   
+    emaitz[k]->A = erpinx;
+    emaitz[k]->B = erpiny;
+    emaitz[k]->weight = pisua;
+}
+
+
+int BILATU3(int partiketa[], int erpin){
+    int etiketa = erpin;
+    while (partiketa[etiketa]>0)
+    {
+         etiketa = partiketa[etiketa];
+    }
+    return etiketa;
+}
+
+//Funtzioak KRUSKAL funtzioko Partiketa array-ean egin behar ditu aldaketak
+//Ez dakit erreferentzia pasata ondo egiten duen. 
+void BATERATU3(int * partiketa[], int erpinx, int erpiny){
+    int x = partiketa[erpinx];
+    int y = partiketa[erpiny];
+    if (x == y)
+    {
+        partiketa[erpinx]--;
+        partiketa[erpiny] = erpinx;
+    }else if (x < y)
+    {
+        partiketa[erpiny] = erpinx;
+    }else
+    {
+        partiketa[erpinx] = erpiny;
+    }
+    
+    
+}
+
+/*
+void ErantsiErt(Node2 * hzm, int erpinx, int erpiny)
+
+{   
+    struct Node2 *nodoBerria = malloc(sizeof(struct Node2));
+    //create a new node
+    
+    nodoBerria->A = erpinx;
+    nodoBerria->B = erpiny;
+    nodoBerria->weight = erpiny;
+    nodoBerria->next = NULL;
+
+    //if head is NULL, it is an empty list
+    if(hzm == NULL)
+         hzm = nodoBerria;
+    //Otherwise, find the last node and add the newNode
+    else
+    {
+        struct Node2 *erro = hzm;
         
-        //Balio maximoarekin hasieratu minP
-        minP = __INT_MAX__;
-
-        for (j=1; j<p; j++){ // 1..p-1
-            
-            //minimoa bilatu eta posizioa K-n gorde
-            if (PisuMin[j]>-1 && PisuMin[j] < minP){
-                minP=PisuMin[j]; 
-                k=j;
-            }
+        //last node's next address will be NULL.
+        while(erro->next != NULL)
+        {
+            erro = erro->next;
         }
 
-    // k harrapatzen du hzm-k;
-    ErantsiErt(hzm, k, &Auzokide[k], &PisuMin[k], sLuz );
-    
-    // ≅sErt[sLuz]=(k,Auzokide[k], PisuMin[k])
-    PisuMin[k]= -1;
-    
-    for (z=1; z<p; z++ ){ //k-ren auzokideeak direnak
-        
-        if (G[k][j]<PisuMin[z]) {
-            
-            PisuMin[z]= G[k][z]; Auzokide[z]=k; 
-        }
-    }
+        //add the newNode at the end of the linked list
+        erro->next = nodoBerria;
     }
 }
-
-void ErantsiErt(ertzPisuPos hzm [], int k, int Auzokide [], int PisuMin [], int sluz){
-    //TODO
-}
-
-void main2(void){
-    printf("Auxilio");
-}
+*/
