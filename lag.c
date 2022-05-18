@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include "lag.h"
 
+extern Node lista[];
 
 int searchElement(struct Node* head, int item)
 {
@@ -22,9 +23,18 @@ int searchElement(struct Node* head, int item)
     return -1;
 }
 
-float mysearchElement(struct Node* head, int item)
+float mysearchElement(int item1, int item2)
 {
-    struct Node* current = head;  // Initialize current
+    Node * current;
+    int item;
+    if(item1 > item2){
+        current = &lista[item2];
+        item = item1;
+    }else{
+        current = &lista[item1];
+        item = item2;
+    }
+    
     int index = 0;
     // traverse till then end of the linked list
     while (current != NULL)

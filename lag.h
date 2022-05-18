@@ -36,7 +36,7 @@ typedef ertz ertz;
 
 //PRIM-ekin Ibiltzeko NODE erabilita
 int searchElement(struct Node* head, int item);
-float mysearchElement(struct Node* head, int item);
+float mysearchElement(int item1, int item2);
 void insert(struct Node** head, int data);
 void display(struct Node* node);
 

@@ -53,7 +53,7 @@ void PRIM (int p, ertzPisuPos hzm []){
 
         //Berria:
         //Simetrikotasun errorea Maikol
-        PisuMin[k] = mysearchElement(&lista[0], k);
+        PisuMin[k] = mysearchElement(0, k);
         printf("Pisumin[%d]: %f \n",k, PisuMin[k]);
 
         
@@ -63,7 +63,7 @@ void PRIM (int p, ertzPisuPos hzm []){
         
         //Balio maximoarekin hasieratu minP
         minP = __FLT_MAX__;
-        printf("minP: %d \n", minP);
+        printf("minP: %f \n", minP);
 
         for (j=1; j<p; j++){ // 1..p-1
             
@@ -86,15 +86,6 @@ void PRIM (int p, ertzPisuPos hzm []){
         
         // ≅sErt[sLuz]=(k,Auzokide[k], PisuMin[k])
         PisuMin[k]= -1;
-        
-        int handiena=0, txikiena=0;
-        if (k>j){
-            handiena=k;
-            txikiena=j;
-        }else{
-            handiena=j;
-            txikiena=k;
-        }
 
 
         for (z=1; z<p; z++ ){ //k-ren auzokideeak direnak
@@ -109,18 +100,9 @@ void PRIM (int p, ertzPisuPos hzm []){
             
             
             //Simetrikotasun arazoa Maikol
-            if (mysearchElement(&lista[txikiena], handiena) < PisuMin[z]) {
-                
-                int handienaZ=0, txikienaZ=0;
-                if (k>z){
-                    handienaZ=k;
-                    txikienaZ=z;
-                }else{
-                    handienaZ=z;
-                    txikienaZ=k;
-                }
-                
-                PisuMin[z]= mysearchElement(&lista[txikienaZ], handienaZ); 
+            if (mysearchElement(k,z) < PisuMin[z]) {
+                printf("HAu da Z: %d eta hau da K: %d eta hau da J: %d\n",z,k,j);
+                PisuMin[z]= mysearchElement(k, z); 
                 Auzokide[z]=k; 
             }
         }
@@ -132,6 +114,6 @@ void ErantsiErt(ertzPisuPos hzm [], int k, int Auzokide [], float PisuMin [], in
 }
 
 void main2(void){
-    float a = mysearchElement(&lista[0], 14);
+    float a = mysearchElement(0, 14);
     printf("%f \n", a);
 }

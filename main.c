@@ -13,12 +13,12 @@ int main(void){
     printf("========= \n");
     
     int nodoKop = in();
-    ertzPisuPos hzm [nodoKop];
+    ertzPisuPos hzm [nodoKop - 1];
     PRIM(nodoKop,hzm);
     
     printf("%d\n", __INT_MAX__);
     
-    for (int i = 0; i < nodoKop; i++){ 
+    for (int i = 0; i < nodoKop - 1; i++){ 
         printf("from %d to %d, with weight: %f \n", hzm[i].A, hzm[i].B, hzm[i].weight);
     }
     
