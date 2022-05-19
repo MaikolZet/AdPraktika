@@ -6,6 +6,7 @@
 #include "lag.h"
 
 extern Node lista[];
+extern Node2* lista_kruskal;
 
 int searchElement(struct Node* head, int item)
 {
@@ -70,6 +71,23 @@ void insert(struct Node** head, int data){
     *head = newNode;
 }
 
+void push(struct Node2** head_ref, int A, int B, float weight)
+{
+    /* 1. allocate node */
+    struct Node2* new_node = (struct Node2*) malloc(sizeof(struct Node2));
+  
+    /* 2. put in the data  */
+    new_node->A  = A;
+    new_node->B  = B;
+    new_node->weight  = weight;
+  
+    /* 3. Make next of new node as head */
+    new_node->next = (*head_ref);
+  
+    /* 4. move the head to point to the new node */
+    (*head_ref)    = new_node;
+}
+
 void display(struct Node* node){
 
     //as linked list will end when Node is Null
@@ -79,6 +97,16 @@ void display(struct Node* node){
         node = node->next;
     }
     printf("\n");
+}
+
+void display2(){
+
+    //as linked list will end when Node is Null
+    while(lista_kruskal!=NULL)
+    {
+        printf("%d-tik %d-ra: %f-ko pisuarekin \n",lista_kruskal->A,lista_kruskal->B,lista_kruskal->weight);
+        lista_kruskal = lista_kruskal->next;
+    }
 }
 
 /* sorts the linked list by changing next pointers (not data) */
@@ -155,5 +183,7 @@ void FrontBackSplit(struct Node2* source, struct Node2** frontRef, struct Node2*
     *backRef = slow->next;
     slow->next = NULL;
 }
+
+
 
  

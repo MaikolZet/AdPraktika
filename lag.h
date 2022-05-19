@@ -22,7 +22,7 @@ typedef Node Node;
 struct Node2 {
     int A;
     int B;
-    int weight;
+    float weight;
     struct Node2* next;    
 };
 typedef Node2 Node2;
@@ -30,7 +30,7 @@ typedef Node2 Node2;
 struct ertz {
     int A;
     int B;
-    int weight;  
+    float weight;  
 };
 typedef ertz ertz;
 
@@ -45,6 +45,8 @@ void display(struct Node* node);
 void MergeSort(struct Node2** headRef);
 struct Node2* SortedMerge(struct Node2* a, struct Node2* b);
 void FrontBackSplit(struct Node2* source, struct Node2** frontRef, struct Node2** backRef);
+void push(struct Node2** head_ref, int A, int B, float weight);
+void display2();
 
 
 #endif

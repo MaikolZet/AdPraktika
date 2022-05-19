@@ -7,12 +7,11 @@
 #include "lag.h"
 //Solucion de mierda ezin da modu globalean utxik utzi eta listak zenbat dittun jakitteko ezinbestekoa da irakurtzea artxiboa
 Node lista[10000];
+struct Node2* lista_kruskal;
 
-int in(void)
-{
-    // Fitxategiaren izena definitu
-    const char *filename = "grafoak/gp_7n16a.txt";
-
+//FOR PRIM
+int in(const char *filename){
+    
     // Fitxategia ireki fopen-ekin
     FILE *input_file = fopen(filename, "r");
 
@@ -32,7 +31,6 @@ int in(void)
     float pisua = 0.0;
     // Lehen lerroa irakurtzen da linkedlista hasieratzeko
     getline(&contents, &len, input_file);
-    printf("%s \n", contents);
 
     char str[strlen(contents)];
     strcpy(str, contents);
@@ -49,8 +47,8 @@ int in(void)
     }
     Node *lag;
     getline(&contents, &len, input_file);
-    // loop honetan 3. lerrotik aurrera irakurtzen da!
 
+    // loop honetan 3. lerrotik aurrera irakurtzen da!
     while ((getline(&contents, &len, input_file) != -1))
     {
 
@@ -103,9 +101,86 @@ int in(void)
     return a;
 }
 
-int geta(){
-    // Fitxategiaren izena definitu
-    const char *filename = "grafoak/gp_7n16a.txt";
+//FOR KRUSKAL
+int in2(const char *filename){
+
+    // Fitxategia ireki fopen-ekin
+    FILE *input_file = fopen(filename, "r");
+
+    // Fitxategirik ezin bada ireki (izena gaizki dagoelako adibidez)
+    // Errorea bueltatu
+    if (!input_file)
+        exit(EXIT_FAILURE);
+
+    // Fitxategiaren luzeera kalkulatzeko
+    fseek(input_file, 0L, SEEK_END);
+    fseek(input_file, 0L, SEEK_SET);
+
+    // Hasieraketa guztiak
+    char *contents = NULL;
+    size_t len = 0;
+    int i, a, v = -1;
+    int lehena=0;
+    float pisua = 0.0;
+    // Lehen lerroa irakurtzen da linkedlista hasieratzeko
+    getline(&contents, &len, input_file);
+    getline(&contents, &len, input_file);
+    
+    char str[strlen(contents)];
+    strcpy(str, contents);
+    char delim[] = " ";
+    char *ptr = strtok(str, delim);
+
+    // loop honetan 3. lerrotik aurrera irakurtzen da!
+    while ((getline(&contents, &len, input_file) != -1))
+    {
+       
+        if (lehena==0){
+            //LISTAREN LEHEN NODOA HASIERATU
+
+            strcpy(str, contents);
+            
+            //Ertza (v, i)
+            ptr = strtok(str, delim);
+            v = atoi(ptr);
+            ptr = strtok(NULL, delim);
+            i = atoi(ptr);
+            //Weight
+            ptr = strtok(NULL, delim);
+            pisua = atof(ptr);
+
+            lehena++;
+            lista_kruskal = (struct Node2*)malloc(sizeof(Node2));
+            lista_kruskal->A=v;
+            lista_kruskal->B=i;
+            lista_kruskal->weight=pisua;
+            lista_kruskal->next= NULL;
+
+        }else{
+            strcpy(str, contents);
+            
+            //Ertza (v, i)
+            ptr = strtok(str, delim);
+            v = atoi(ptr);
+            ptr = strtok(NULL, delim);
+            i = atoi(ptr);
+            //Weight
+            ptr = strtok(NULL, delim);
+            pisua = atof(ptr);
+            push(&lista_kruskal, v, i, pisua);
+            
+        }
+        
+    }
+    MergeSort(&lista_kruskal);
+    fclose(input_file);
+    free(contents);
+    return a;
+}
+
+
+//DAGOENEKO EZ DA BEHAR BORRATU DAITEKE
+int geta(char *filename){
 
     // Fitxategia ireki fopen-ekin
     FILE *input_file = fopen(filename, "r");
@@ -124,7 +199,6 @@ int geta(){
     size_t len = 0;
     // Lehen lerroa irakurtzen da linkedlista hasieratzeko
     getline(&contents, &len, input_file);
-    printf("%s \n", contents);
 
     char str[strlen(contents)];
     strcpy(str, contents);

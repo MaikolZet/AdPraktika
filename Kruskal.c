@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Kruskal.h"
 #include "lag.h"
 
@@ -36,13 +38,14 @@ PisuenGoranzkoOrdenaJarraituzOrdenatu(G, a, gEO); eginda ekarri
 ertzOrdenatuak--> ertzen zerrenda ordenatua pisuarekiko
 */
 
-void KRUSKAL(int ertzKop, int erpinKop, Node2 ertzOrdenatuak)
+void KRUSKAL(int ertzKop, int erpinKop, Node2 *ertzOrdenatuak)
 {
     int sErtzKop = 0, xBarne, yBarne, erpinx, erpiny;
     float pisua;
     /*Node2 hzm = NULL;*/
     ertz emaitz[ertzKop];
-    struct Node2 *iteratzaile = malloc(sizeof(struct Node2));
+    struct Node2 *iteratzaile;
+    iteratzaile = (Node2*)malloc(sizeof(Node2));
     iteratzaile = ertzOrdenatuak;
     //Hasieratu partiketa {-1, -1, ... , -1} izan dadin memorian
     int Partiketa[erpinKop];
@@ -61,9 +64,9 @@ void KRUSKAL(int ertzKop, int erpinKop, Node2 ertzOrdenatuak)
         yBarne = BILATU3(Partiketa, erpiny);
         if (yBarne != xBarne)
         {
-            BATERATU3(&Partiketa, xBarne, yBarne);
+            BATERATU3(Partiketa, xBarne, yBarne);
             /*ErantsiErt(&hzm, erpinx, erpiny);// logikoki: hzm[sErtzKop]=(erpinx,erpiny);*/
-            ErantsiErt(&emaitz,sErtzKop, erpinx, erpiny, pisua);
+            ErantsiErt(emaitz,sErtzKop, erpinx, erpiny, pisua);
             sErtzKop++;
         }
         iteratzaile = iteratzaile->next;
@@ -72,11 +75,11 @@ void KRUSKAL(int ertzKop, int erpinKop, Node2 ertzOrdenatuak)
 
 //KRUSKAL funtzioko emaitz aldagaian egin behar dira aldaketak
 //C-n ez dakidanez programatzen ez dakit modu hontan gordeko diren behar diren aldaketak.
-void ErantsiErt(ertz * emaitz[], int k, int erpinx, int erpiny, float pisua)
+void ErantsiErt(ertz emaitz[], int k, int erpinx, int erpiny, float pisua)
 {   
-    emaitz[k]->A = erpinx;
-    emaitz[k]->B = erpiny;
-    emaitz[k]->weight = pisua;
+    emaitz[k].A = erpinx;
+    emaitz[k].B = erpiny;
+    emaitz[k].weight = pisua;
 }
 
 
@@ -91,7 +94,7 @@ int BILATU3(int partiketa[], int erpin){
 
 //Funtzioak KRUSKAL funtzioko Partiketa array-ean egin behar ditu aldaketak
 //Ez dakit erreferentzia pasata ondo egiten duen. 
-void BATERATU3(int * partiketa[], int erpinx, int erpiny){
+void BATERATU3(int partiketa[], int erpinx, int erpiny){
     int x = partiketa[erpinx];
     int y = partiketa[erpiny];
     if (x == y)
