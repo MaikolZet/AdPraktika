@@ -57,12 +57,6 @@ void KRUSKAL()
     float pisua;
     /*Node2 hzm = NULL;*/
     //ertz emaitz[ertzKop];
-    
-    struct Node2 *iteratzaile = (Node2*)malloc(sizeof(Node2));
-    iteratzaile->A = ertzOrdenatuak->A;
-    iteratzaile->B = ertzOrdenatuak->B;
-    iteratzaile->weight = ertzOrdenatuak->weight;
-    iteratzaile->next= ertzOrdenatuak->next;
 
     //Hasieratu partiketa {-1, -1, ... , -1} izan dadin memorian
     int Partiketa[erpinKop];
@@ -71,12 +65,8 @@ void KRUSKAL()
     //BERRIA: Ustet horrela egin dela (lo he mirao en gologolo)
     for (int index = 0; index < erpinKop; index++){Partiketa[index]=-1;}
     
-    while (sErtzKop != ertzKop - 1)
+    while (sErtzKop != ertzKop - 1 && ertzOrdenatuak!=NULL)
     {   
-        if (iteratzaile==NULL)
-        {           
-            break;
-        }
 
         //printf("%d-tik %d-ra: %f-ko pisuarekin \n",iteratzaile->A,iteratzaile->B,iteratzaile->weight);
         //printf("%d-tik %d-ra: %f-ko pisuarekin \n",iteratzaile->next->A,iteratzaile->next->B,iteratzaile->next->weight);
@@ -84,9 +74,9 @@ void KRUSKAL()
         //Nodoa iteratu, hurrengoa eta hurrengoa lortu arte.NULL izan arte.
         //Horrela lortu dezakgu listako hurrengo ertz pisu gutxienekoa, bere ezaugarri guztiekin. Pisua baita!
         //Denbora kostu minimoarekin
-        erpinx = iteratzaile->A;
-        erpiny = iteratzaile->B;
-        pisua = iteratzaile->weight;
+        erpinx = ertzOrdenatuak->A;
+        erpiny = ertzOrdenatuak->B;
+        pisua = ertzOrdenatuak->weight;
 
         xBarne = BILATU3(Partiketa, erpinx);
         yBarne = BILATU3(Partiketa, erpiny);
@@ -95,11 +85,10 @@ void KRUSKAL()
         {   
             BATERATU3(Partiketa, xBarne, yBarne);
             /*ErantsiErt(&hzm, erpinx, erpiny);// logikoki: hzm[sErtzKop]=(erpinx,erpiny);*/
-            ErantsiErt(sErtzKop, erpinx, erpiny, pisua, lehena);
-            lehena++;
+            ErantsiErt(sErtzKop, erpinx, erpiny, pisua);
             sErtzKop++;
         }
-        iteratzaile = iteratzaile->next;
+        ertzOrdenatuak = ertzOrdenatuak->next;
         //printf("%d-tik %d-ra: %f-ko pisuarekin \n",iteratzaile->A,iteratzaile->B,iteratzaile->weight);
         
     }
@@ -108,9 +97,9 @@ void KRUSKAL()
 
 //KRUSKAL funtzioko emaitz aldagaian egin behar dira aldaketak
 //C-n ez dakidanez programatzen ez dakit modu hontan gordeko diren behar diren aldaketak.
-void ErantsiErt(int k, int erpinx, int erpiny, float pisua, int lehena)
+void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
 {   
-    if (lehena==0){
+    if (Emaitza==NULL){
         Emaitza = (struct Node2*)malloc(sizeof(Node2));
         Emaitza->A=erpinx;
         Emaitza->B=erpiny;
