@@ -8,6 +8,7 @@
 //Solucion de mierda ezin da modu globalean utxik utzi eta listak zenbat dittun jakitteko ezinbestekoa da irakurtzea artxiboa
 Node lista[10000];
 struct Node2* lista_kruskal;
+int ema[2];
 
 //FOR PRIM
 int in(const char *filename){
@@ -119,17 +120,26 @@ int in2(const char *filename){
     // Hasieraketa guztiak
     char *contents = NULL;
     size_t len = 0;
-    int i, a, v = -1;
+    int i, a, b, v = -1;
     int lehena=0;
     float pisua = 0.0;
+
     // Lehen lerroa irakurtzen da linkedlista hasieratzeko
     getline(&contents, &len, input_file);
-    getline(&contents, &len, input_file);
-    
     char str[strlen(contents)];
     strcpy(str, contents);
     char delim[] = " ";
     char *ptr = strtok(str, delim);
+    a = atoi(ptr);
+    ema[0]=a;
+
+    // Bigarren lerroa irakurtzen da linkedlista hasieratzeko
+    getline(&contents, &len, input_file);
+    char str2[strlen(contents)];
+    strcpy(str2, contents);
+    char * ptr2 = strtok(str2, delim);
+    b = atoi(ptr2);
+    ema[1]=b;
 
     // loop honetan 3. lerrotik aurrera irakurtzen da!
     while ((getline(&contents, &len, input_file) != -1))
@@ -172,10 +182,11 @@ int in2(const char *filename){
         }
         
     }
+    
     MergeSort(&lista_kruskal);
     fclose(input_file);
     free(contents);
-    return a;
+    return 0;
 }
 
 

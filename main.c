@@ -3,11 +3,12 @@
 #include "IN_script.h"
 #include "lag.h"
 #include "Prim.h"
+#include "Kruskal.h"
 #include <time.h>
 #define elemkop(x)  (sizeof(x) / sizeof((x)[0]))
 
 void prim(int nodokop);
-void kruskal(int nodoKop);
+void kruskal();
 void printPrim();
 void printKruskal();
 
@@ -20,7 +21,17 @@ const char *filename4 = "grafoak/gp_250n1273a.txt";
 const char *filename5 = "grafoak/gp_1000n8433a.txt";
 const char *filename6 = "grafoak/gp_10000n61731a.txt";
 
+extern Node2* Emaitza;
+
 int main(void){
+
+
+
+    //================================================//
+                     printf("\n\n");
+    //================================================//
+    
+
 
     printPrim();
     //==============================//
@@ -35,10 +46,16 @@ int main(void){
     
     //Fitxategien irakurketa:
     int nodoKop = in(filename0);
-    
-    //Algoritmoaren exekuzioa eta kronometrazioa
+
+    //Algoritmoaren exekuzioa:
     prim(nodoKop);
    
+    
+    
+    //================================================//
+                     printf("\n\n");
+    //================================================//
+
 
 
     printKruskal();
@@ -56,8 +73,14 @@ int main(void){
     in2(filename0);
 
     //Algoritmoaren exekuzioa:
-    kruskal(nodoKop);
+    kruskal();
     
+    
+
+    //================================================//
+                     printf("\n\n");
+    //================================================//
+
 }
 
 //BUKATUTA
@@ -83,12 +106,13 @@ void prim(int nodoKop){
     // 3- Denboragailuaren amaiera
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("========= \n");
     printf("prim() exekutatzeko %f segundu behar izan dira \n\n\n", time_taken);
 
-    printf("========= \n");
+    
 }
 
-void kruskal(int nodoKop){
+void kruskal(){
 
     //Donde se ejekuta la magia
     printf("Kruskal ejekutatzen ari da:: \n");
@@ -97,20 +121,22 @@ void kruskal(int nodoKop){
     // 1- Denboragailuaren hasieraketa
     clock_t t;
     t = clock();
-
-    // 2.1- Bektorearen hasieraketa
-    ertzPisuPos hzm [nodoKop - 1];
     // 2.2- Algoritmoareren exekuzioa
-        //TODO
+    KRUSKAL();
     // 2.3- Emaitzen pantailaraketa
-        //TODO
+    while(Emaitza!=NULL)
+    {
+        printf("from %d to %d, with weight: %f \n", Emaitza->A, Emaitza->B, Emaitza->weight);
+        Emaitza = Emaitza->next;
+    }
 
     // 3- Denboragailuaren amaiera
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("========= \n");
     printf("kruskal() exekutatzeko %f segundu behar izan dira \n\n\n", time_taken);
 
-    printf("========= \n");
+    
 }
 
 
