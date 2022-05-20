@@ -46,7 +46,7 @@ int sErtzKop;
 int pisuMet;
 int lehena=0;
 
-float baturaKruskal=0;
+double baturaKruskal=0;
 
 void KRUSKAL()
 {   
@@ -113,6 +113,7 @@ void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
         berri->A=erpinx;
         berri->B=erpiny;
         berri->weight=pisua;
+        berri->next = NULL;
         azkena->next= berri;
         azkena = berri;
         baturaKruskal+=berri->weight;

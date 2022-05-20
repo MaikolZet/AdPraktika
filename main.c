@@ -15,8 +15,8 @@ void printPrim();
 void printKruskal();
 
 extern Node2* Emaitza;
-extern float baturaPrim;
-extern float baturaKruskal;
+extern double baturaPrim;
+extern double baturaKruskal;
 extern int sErtzKop;
 
 // Fitxategien izena definitu
@@ -141,7 +141,7 @@ void prim(){
     
     //Output fitxategiaren hasieraketa
     int num;
-    FILE *out=fopen("prim_out","w");
+    FILE *out=fopen("prim_out.txt","w");
     if(out == NULL){printf("Error!");exit(1);} 
 
     // 1- Fitxategien irakurketa:
@@ -180,7 +180,7 @@ void prim(){
 void kruskal(){
 
     //Output fitxategiaren hasieraketa
-    FILE *out=fopen("kruskal_out","w");
+    FILE *out=fopen("kruskal_out.txt","w");
     if(out == NULL){printf("Error!");exit(1);}  
     
     // 1- Fitxategien irakurketa:

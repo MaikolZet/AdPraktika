@@ -8,7 +8,7 @@ all: exek proba
 .PHONY: clean
 
 clean:
-	rm exek prim_out kruskal_out
+	rm exek prim_out.txt kruskal_out.txt
 
 exek: $(SOURCES) 
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $(SOURCES)

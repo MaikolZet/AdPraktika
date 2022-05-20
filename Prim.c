@@ -29,7 +29,7 @@ Sarrerako .txt adibide bat:
     0 5 5.9
     
 */
-float baturaPrim=0;
+double baturaPrim=0;
 extern Node lista[];
 
 void PRIM (int p, ertzPisuPos hzm []){
