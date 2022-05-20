@@ -36,8 +36,12 @@ PisuenGoranzkoOrdenaJarraituzOrdenatu(G, a, gEO); eginda ekarri
 ertzOrdenatuak--> ertzen zerrenda ordenatua pisuarekiko
 */
 extern int ema[];
+int sErtzKop;
+int pisuMet;
 extern Node2* lista_kruskal;
 struct Node2* Emaitza;
+struct Node2* azkena;
+struct Node2* berri;
 int lehena=0;
 
 void KRUSKAL()
@@ -50,8 +54,10 @@ void KRUSKAL()
     
     int erpinKop=ema[0];
     int ertzKop=ema[1];
+    sErtzKop = 0;
+    pisuMet = 0;
 
-    int sErtzKop = 0, xBarne, yBarne, erpinx, erpiny;
+    int xBarne, yBarne, erpinx, erpiny;
     float pisua;
 
     //Hasieratu partiketa {-1, -1, ... , -1} izan dadin memorian
@@ -78,6 +84,7 @@ void KRUSKAL()
             BATERATU3(Partiketa, xBarne, yBarne);
             ErantsiErt(sErtzKop, erpinx, erpiny, pisua);
             sErtzKop++;
+            pisuMet += pisua;
         }      
         ertzOrdenatuak=ertzOrdenatuak->next;
     }
@@ -90,12 +97,19 @@ void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
 {   
     if (Emaitza==NULL){
         Emaitza = (struct Node2*)malloc(sizeof(Node2));
+        azkena = (struct Node2*)malloc(sizeof(Node2));
         Emaitza->A=erpinx;
         Emaitza->B=erpiny;
         Emaitza->weight=pisua;
         Emaitza->next= NULL;
+        azkena = Emaitza;
     }else{
-        append(&Emaitza, erpinx, erpiny, pisua);
+        berri = (struct Node2*)malloc(sizeof(Node2));
+        berri->A=erpinx;
+        berri->B=erpiny;
+        berri->weight=pisua;
+        azkena->next= berri;
+        azkena = berri;
     }
 }
 
