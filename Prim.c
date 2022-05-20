@@ -51,7 +51,7 @@ void PRIM (int p, ertzPisuPos hzm []){
         
         //Berria:
         //Simetrikotasun errorea Maikol
-        PisuMin[k] = mysearchElement(0, k);
+        PisuMin[k] = 1/mysearchElement(0, k);
         //printf("Pisumin[%d]: %f \n",k, PisuMin[k]);
 
         
@@ -78,7 +78,8 @@ void PRIM (int p, ertzPisuPos hzm []){
         
         hzm[sLuz].A=k;
         hzm[sLuz].B=Auzokide[k];
-        hzm[sLuz].weight=PisuMin[k];
+        hzm[sLuz].weight= 1/PisuMin[k];
+        baturaPrim+=hzm[sLuz].weight;
         
         //printf("KONTUZ!! from %d to %d, with weight: %f \n", k, Auzokide[k], PisuMin[k]);
         
@@ -98,9 +99,9 @@ void PRIM (int p, ertzPisuPos hzm []){
             
             
             //Simetrikotasun arazoa Maikol
-            if (mysearchElement(k,z) < PisuMin[z]) {
+            if (1/mysearchElement(k,z) < PisuMin[z]) {
                 //printf("HAu da Z: %d eta hau da K: %d eta hau da J: %d\n",z,k,j);
-                PisuMin[z]= mysearchElement(k, z); 
+                PisuMin[z]= 1/mysearchElement(k, z); 
                 Auzokide[z]=k; 
             }
         }

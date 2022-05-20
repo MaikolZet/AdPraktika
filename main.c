@@ -155,7 +155,7 @@ void prim(){
     // 2- Algoritmoareren exekuzioa
     t = clock();
     ertzPisuPos hzm [nodoKop - 1];
-    PRIM_MAX(nodoKop,hzm);
+    PRIM(nodoKop,hzm);
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("prim algoritmoa exekutatzeko:            ~~~ >  %f segundu \n\n", time_taken);
