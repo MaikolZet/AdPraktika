@@ -50,14 +50,14 @@ float mysearchElement(int item1, int item2)
         }
         else if (current->data > item)
         {
-            return __FLT_MAX__;
+            return __FLT_MIN__;
         }
         
     }
 
 
     
-    return __FLT_MAX__;
+    return __FLT_MIN__;
 }
 
 void insert(struct Node** head, int data){

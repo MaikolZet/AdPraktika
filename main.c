@@ -45,7 +45,7 @@ int main(void){
     //==============================//
     
     //Fitxategien irakurketa:
-    int nodoKop = in(filename0);
+    int nodoKop = in(filename6);
 
     //Algoritmoaren exekuzioa:
     prim(nodoKop);
@@ -70,7 +70,7 @@ int main(void){
     //================================================//
     
     //Fitxategien irakurketa:
-    in2(filename0);
+    in2(filename6);
 
     //Algoritmoaren exekuzioa:
     kruskal();
@@ -101,10 +101,12 @@ void prim(int nodoKop){
     // 2.2- Algoritmoareren exekuzioa
     PRIM_MAX(nodoKop,hzm);
     // 2.3- Emaitzen pantailaraketa
+    float pisua = 0.0;
     for (int i = 0; i < nodoKop - 1; i++){ 
         printf("from %d to %d, with weight: %f \n", hzm[i].A, hzm[i].B, hzm[i].weight);
+        pisua += hzm[i].weight;
     }
-
+    printf("Pisua MAX: %f \n", pisua);
     // 3- Denboragailuaren amaiera
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
@@ -126,12 +128,14 @@ void kruskal(){
     // 2.2- Algoritmoareren exekuzioa
     KRUSKAL();
     // 2.3- Emaitzen pantailaraketa
+    float pisua = 0.0;
     while(Emaitza!=NULL)
     {
         printf("from %d to %d, with weight: %f \n", Emaitza->A, Emaitza->B, Emaitza->weight);
+        pisua += Emaitza->weight;
         Emaitza = Emaitza->next;
     }
-
+    printf("Pisua MAX: %f \n", pisua);
     // 3- Denboragailuaren amaiera
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
