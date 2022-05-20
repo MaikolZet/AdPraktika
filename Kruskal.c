@@ -29,8 +29,6 @@ Sarrerako .txt adibide bat:
     0 3 4.4      1 4 9.65    2 5 2.0
     0 4 1.3      1 5 12.2
     0 5 5.9
-
-a: #ertz; p: #erpin
 */
 
 /*
@@ -55,8 +53,6 @@ void KRUSKAL()
 
     int sErtzKop = 0, xBarne, yBarne, erpinx, erpiny;
     float pisua;
-    /*Node2 hzm = NULL;*/
-    //ertz emaitz[ertzKop];
 
     //Hasieratu partiketa {-1, -1, ... , -1} izan dadin memorian
     int Partiketa[erpinKop];
@@ -66,11 +62,7 @@ void KRUSKAL()
     for (int index = 0; index < erpinKop; index++){Partiketa[index]=-1;}
     
     while (sErtzKop != ertzKop - 1 && ertzOrdenatuak!=NULL)
-    {   
-
-        //printf("%d-tik %d-ra: %f-ko pisuarekin \n",iteratzaile->A,iteratzaile->B,iteratzaile->weight);
-        //printf("%d-tik %d-ra: %f-ko pisuarekin \n",iteratzaile->next->A,iteratzaile->next->B,iteratzaile->next->weight);
-        
+    {    
         //Nodoa iteratu, hurrengoa eta hurrengoa lortu arte.NULL izan arte.
         //Horrela lortu dezakgu listako hurrengo ertz pisu gutxienekoa, bere ezaugarri guztiekin. Pisua baita!
         //Denbora kostu minimoarekin
@@ -84,13 +76,11 @@ void KRUSKAL()
         if (yBarne != xBarne)
         {   
             BATERATU3(Partiketa, xBarne, yBarne);
-            /*ErantsiErt(&hzm, erpinx, erpiny);// logikoki: hzm[sErtzKop]=(erpinx,erpiny);*/
-            ErantsiErt(sErtzKop, erpinx, erpiny, pisua);
             sErtzKop++;
+        }else{
+            ErantsiErt(sErtzKop, erpinx, erpiny, pisua);
         }
-        ertzOrdenatuak = ertzOrdenatuak->next;
-        //printf("%d-tik %d-ra: %f-ko pisuarekin \n",iteratzaile->A,iteratzaile->B,iteratzaile->weight);
-        
+        ertzOrdenatuak = ertzOrdenatuak->next;        
     }
 
 }
@@ -113,7 +103,7 @@ void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
 
 int BILATU3(int partiketa[], int erpin){
     int etiketa = erpin;
-    while (partiketa[etiketa]>0)
+    while (partiketa[etiketa]>=0)
     {
         etiketa = partiketa[etiketa];
     }
@@ -127,7 +117,7 @@ void BATERATU3(int partiketa[], int erpinx, int erpiny){
     int y = partiketa[erpiny];
     if (x == y)
     {
-       partiketa[erpinx]--;
+        partiketa[erpinx]--;
         partiketa[erpiny] = erpinx;
     }else if (x < y)
     {
@@ -139,35 +129,3 @@ void BATERATU3(int partiketa[], int erpinx, int erpiny){
     
     
 }
-
-/*
-void ErantsiErt(Node2 * hzm, int erpinx, int erpiny)
-
-{   
-    struct Node2 *nodoBerria = malloc(sizeof(struct Node2));
-    //create a new node
-    
-    nodoBerria->A = erpinx;
-    nodoBerria->B = erpiny;
-    nodoBerria->weight = erpiny;
-    nodoBerria->next = NULL;
-
-    //if head is NULL, it is an empty list
-    if(hzm == NULL)
-         hzm = nodoBerria;
-    //Otherwise, find the last node and add the newNode
-    else
-    {
-        struct Node2 *erro = hzm;
-        
-        //last node's next address will be NULL.
-        while(erro->next != NULL)
-        {
-            erro = erro->next;
-        }
-
-        //add the newNode at the end of the linked list
-        erro->next = nodoBerria;
-    }
-}
-*/
