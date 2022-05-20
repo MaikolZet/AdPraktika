@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "OUT_script.h"
 #include "IN_script.h"
 #include "lag.h"
@@ -7,12 +8,19 @@
 #include <time.h>
 #define elemkop(x)  (sizeof(x) / sizeof((x)[0]))
 
-void prim(int nodokop);
+void menu();
+void prim();
 void kruskal();
 void printPrim();
 void printKruskal();
 
+extern Node2* Emaitza;
+extern float baturaPrim;
+extern float baturaKruskal;
+extern int sErtzKop;
+
 // Fitxategien izena definitu
+const char *filename;
 const char *filename0 = "grafoak/gp_7n16a.txt";
 const char *filename1 = "grafoak/gp_9n36a.txt";
 const char *filename2 = "grafoak/gp_100n1000a.txt";
@@ -21,11 +29,10 @@ const char *filename4 = "grafoak/gp_250n1273a.txt";
 const char *filename5 = "grafoak/gp_1000n8433a.txt";
 const char *filename6 = "grafoak/gp_10000n61731a.txt";
 
-extern Node2* Emaitza;
 
 int main(void){
-
-
+    
+    menu();
 
     //================================================//
                      printf("\n\n");
@@ -44,11 +51,11 @@ int main(void){
     //                              //    
     //==============================//
     
-    //Fitxategien irakurketa:
-    int nodoKop = in(filename6);
-
     //Algoritmoaren exekuzioa:
-    prim(nodoKop);
+    printf("\nPrim ejekutatzen ari da:: \n");
+    printf("========= \n\n");
+    prim();
+    printf("========= \n");
    
     
     
@@ -68,13 +75,13 @@ int main(void){
     //   &  &  &  &   &&&&   &&&   &  &  &  &   &&&&  //             
     //                                                //    
     //================================================//
-    
-    //Fitxategien irakurketa:
-    in2(filename6);
 
-    //Algoritmoaren exekuzioa:
+    //Algoritmoaren exekuzioa:  
+    printf("\nKruskal ejekutatzen ari da:: \n");
+    printf("========= \n\n");
     kruskal();
-    
+    printf("========= \n");
+  
 
 
     //================================================//
@@ -85,66 +92,127 @@ int main(void){
 
 }
 
-//BUKATUTA
-void prim(int nodoKop){
-    //Donde se ejekuta la magia
 
-    printf("Prim ejekutatzen ari da:: \n");
-    printf("========= \n");
+//Aukera menua
+void menu(){
+    int aukera;
+    printf("\n\n zein fitxategi nahi duzu ireki?: \n");
+    printf("    1- grafoak/gp_7n16a.txt\n");
+    printf("    2- grafoak/gp_9n36a.txt\n");
+    printf("    3- grafoak/gp_100n1000a.txt\n");
+    printf("    4- grafoak/gp_200n396a.txt\n");
+    printf("    5- grafoak/gp_250n1273a.txt\n");
+    printf("    6- grafoak/gp_1000n8433a.txt\n");
+    printf("    7- grafoak/gp_10000n61731a.txt\n");
+    printf("\n (idatzi hemen):");
+    scanf("%d", &aukera);
+
+    switch (aukera)
+    {
+    case 1:
+        filename=filename0;
+        break;
+    case 2:
+        filename=filename1;
+        break;
+    case 3:
+        filename=filename2;
+        break;
+    case 4:
+        filename=filename3;
+        break;
+    case 5:
+        filename=filename4;
+        break;
+    case 6:
+        filename=filename5;
+        break;
+    case 7:
+        filename=filename6;
+        break;
+    default:
+        break;
+    }
+}
+
+
+//Donde se ejekuta la magia
+void prim(){
     
-    // 1- Denboragailuaren hasieraketa
+    //Output fitxategiaren hasieraketa
+    int num;
+    FILE *out=fopen("prim_out","w");
+    if(out == NULL){printf("Error!");exit(1);} 
+
+    // 1- Fitxategien irakurketa:
     clock_t t;
     t = clock();
-
-    // 2.1- Bektorearen hasieraketa
-    ertzPisuPos hzm [nodoKop - 1];
-    // 2.2- Algoritmoareren exekuzioa
-    PRIM_MAX(nodoKop,hzm);
-    // 2.3- Emaitzen pantailaraketa
-    float pisua = 0.0;
-    for (int i = 0; i < nodoKop - 1; i++){ 
-        printf("from %d to %d, with weight: %f \n", hzm[i].A, hzm[i].B, hzm[i].weight);
-        pisua += hzm[i].weight;
-    }
-    printf("Pisua MAX: %f \n", pisua);
-    // 3- Denboragailuaren amaiera
+    int nodoKop = in(filename);   
     t = clock() - t;
-    double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("========= \n");
-    printf("prim() exekutatzeko %f segundu behar izan dira \n\n\n", time_taken);
+    float time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("fitxategitik datuak irakurtzeko:         ~~~ >  %f segundu \n\n", time_taken);
+
+    // 2- Algoritmoareren exekuzioa
+    t = clock();
+    ertzPisuPos hzm [nodoKop - 1];
+    PRIM_MAX(nodoKop,hzm);
+    t = clock() - t;
+    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("prim algoritmoa exekutatzeko:            ~~~ >  %f segundu \n\n", time_taken);
+    
+    // 3- Emaitzen OutPut-a:
+    t = clock();
+    fprintf(out,"%f \n",baturaPrim);
+    fprintf(out,"%d \n",nodoKop-1);
+    for (int i = 0; i < nodoKop - 1; i++){ 
+        fprintf(out, "%d %d %f \n", hzm[i].A, hzm[i].B, hzm[i].weight);
+    }
+    fclose(out);
+    t = clock() - t;
+    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("lortutako datuak fitxategian idazteko:   ~~~ >  %f segundu \n\n", time_taken);
 
     
 }
 
+
+//Donde se ejekuta la magia
 void kruskal(){
 
-    //Donde se ejekuta la magia
-    printf("Kruskal ejekutatzen ari da:: \n");
-    printf("========= \n");
+    //Output fitxategiaren hasieraketa
+    FILE *out=fopen("kruskal_out","w");
+    if(out == NULL){printf("Error!");exit(1);}  
     
-    // 1- Denboragailuaren hasieraketa
+    // 1- Fitxategien irakurketa:
     clock_t t;
     t = clock();
-    // 2.2- Algoritmoareren exekuzioa
+    in2(filename);   
+    t = clock() - t;
+    float time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("fitxategitik datuak irakurtzeko:         ~~~ >  %f segundu \n\n", time_taken);
+
+    // 2- Algoritmoareren exekuzioa
+    t = clock();
     KRUSKAL();
-    // 2.3- Emaitzen pantailaraketa
-    float pisua = 0.0;
+    t = clock() - t;
+    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("kruskal algoritmoa exekutatzeko:         ~~~ >  %f segundu \n\n", time_taken);
+
+    // 3- Emaitzen OutPut-a:
+    t = clock();
+    fprintf(out,"%f \n",baturaKruskal);
+    fprintf(out,"%d \n",sErtzKop);
     while(Emaitza!=NULL)
     {
-        printf("from %d to %d, with weight: %f \n", Emaitza->A, Emaitza->B, Emaitza->weight);
-        pisua += Emaitza->weight;
+        fprintf(out, "%d %d %f \n", Emaitza->A, Emaitza->B, Emaitza->weight);
         Emaitza = Emaitza->next;
     }
-    printf("Pisua MAX: %f \n", pisua);
-    // 3- Denboragailuaren amaiera
+    fclose(out);
     t = clock() - t;
-    double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("========= \n");
-    printf("kruskal() exekutatzeko %f segundu behar izan dira \n\n\n", time_taken);
+    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("lortutako datuak fitxategian idazteko:   ~~~ >  %f segundu \n\n", time_taken);
 
-    
 }
-
 
 
 //==================FRIKADAS=================//
@@ -164,6 +232,7 @@ void printPrim(){
     printf("//==============================// \n");
 
 }
+
 
 void printKruskal(){
     printf("//================================================// \n");

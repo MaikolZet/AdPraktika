@@ -36,13 +36,17 @@ PisuenGoranzkoOrdenaJarraituzOrdenatu(G, a, gEO); eginda ekarri
 ertzOrdenatuak--> ertzen zerrenda ordenatua pisuarekiko
 */
 extern int ema[];
-int sErtzKop;
-int pisuMet;
 extern Node2* lista_kruskal;
+
 struct Node2* Emaitza;
 struct Node2* azkena;
 struct Node2* berri;
+
+int sErtzKop;
+int pisuMet;
 int lehena=0;
+
+float baturaKruskal=0;
 
 void KRUSKAL()
 {   
@@ -103,6 +107,7 @@ void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
         Emaitza->weight=pisua;
         Emaitza->next= NULL;
         azkena = Emaitza;
+        baturaKruskal+=Emaitza->weight;
     }else{
         berri = (struct Node2*)malloc(sizeof(Node2));
         berri->A=erpinx;
@@ -110,6 +115,7 @@ void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
         berri->weight=pisua;
         azkena->next= berri;
         azkena = berri;
+        baturaKruskal+=berri->weight;
     }
 }
 

@@ -29,7 +29,7 @@ Sarrerako .txt adibide bat:
     0 5 5.9
     
 */
-
+float baturaPrim=0;
 extern Node lista[];
 
 void PRIM (int p, ertzPisuPos hzm []){
@@ -154,7 +154,7 @@ void PRIM_MAX (int p, ertzPisuPos hzm []){
         hzm[sLuz].A=k;
         hzm[sLuz].B=Auzokide[k];
         hzm[sLuz].weight=PisuMax[k];
-        
+        baturaPrim+=hzm[sLuz].weight;
         //printf("KONTUZ!! from %d to %d, with weight: %f \n", k, Auzokide[k], PisuMin[k]);
         
         // ≅sErt[sLuz]=(k,Auzokide[k], PisuMin[k])

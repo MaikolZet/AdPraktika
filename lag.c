@@ -7,6 +7,7 @@
 
 extern Node lista[];
 extern Node2* lista_kruskal;
+extern struct Node2* Emaitza;
 
 int searchElement(struct Node* head, int item)
 {
@@ -88,15 +89,13 @@ void push(struct Node2** head_ref, int A, int B, float weight)
     (*head_ref)    = new_node;
 }
 
-void display(struct Node* node){
-
+void display(){
     //as linked list will end when Node is Null
-    while(node!=NULL)
+    while(Emaitza!=NULL)
     {
-        printf("%d ",node->data);
-        node = node->next;
+        printf("%d %d %f \n",Emaitza->A,Emaitza->B,Emaitza->weight);
+        Emaitza = Emaitza->next;
     }
-    printf("\n");
 }
 
 void display2(){

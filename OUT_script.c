@@ -5,11 +5,8 @@
 #include <fcntl.h>
 #include "OUT_script.h"
 
-int out(void)
+int out(const char *filename)
 {
-    // Fitxategiaren izena definitu
-    const char *filename = "grafoak/gp_7n16a.txt";
-
     // Fitxategia ireki fopen-ekin
     FILE *input_file = fopen(filename, "r");
 
