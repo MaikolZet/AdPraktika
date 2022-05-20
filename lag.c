@@ -178,7 +178,7 @@ struct Node2* SortedMerge(struct Node2* a, struct Node2* b)
         return (a);
  
     /* Pick either a or b, and recur */
-    if (a->weight <= b->weight) {
+    if (a->weight >= b->weight) {
         result = a;
         result->next = SortedMerge(a->next, b);
     }

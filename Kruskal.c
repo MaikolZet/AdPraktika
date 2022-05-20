@@ -74,13 +74,12 @@ void KRUSKAL()
         yBarne = BILATU3(Partiketa, erpiny);
 
         if (yBarne != xBarne)
-        {   
+        {
             BATERATU3(Partiketa, xBarne, yBarne);
-            sErtzKop++;
-        }else{
             ErantsiErt(sErtzKop, erpinx, erpiny, pisua);
-        }
-        ertzOrdenatuak = ertzOrdenatuak->next;        
+            sErtzKop++;
+        }      
+        ertzOrdenatuak=ertzOrdenatuak->next;
     }
 
 }
