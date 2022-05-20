@@ -77,7 +77,7 @@ int in(const char *filename){
             lag = lag->next;
         }
         lag->data = i;
-        lag->weight = pisua;
+        lag->weight = -1*pisua;
         lag->next = 0;
     }
 

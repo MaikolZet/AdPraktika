@@ -99,7 +99,7 @@ void prim(int nodoKop){
     // 2.1- Bektorearen hasieraketa
     ertzPisuPos hzm [nodoKop - 1];
     // 2.2- Algoritmoareren exekuzioa
-    PRIM(nodoKop,hzm);
+    PRIM_MAX(nodoKop,hzm);
     // 2.3- Emaitzen pantailaraketa
     for (int i = 0; i < nodoKop - 1; i++){ 
         printf("from %d to %d, with weight: %f \n", hzm[i].A, hzm[i].B, hzm[i].weight);

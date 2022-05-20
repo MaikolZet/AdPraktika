@@ -3,7 +3,5 @@
 #include "lag.h"
 
 void PRIM (int p, ertzPisuPos hzm []);
-void ErantsiErt(ertzPisuPos hzm [],int k,int Auzokide [],float PisuMin [],int sluz);
-void main2(void);
-
+void PRIM_MAX (int p, ertzPisuPos hzm []);
 #endif

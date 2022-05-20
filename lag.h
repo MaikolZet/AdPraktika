@@ -47,7 +47,6 @@ void MergeSort(struct Node2** headRef);
 struct Node2* SortedMerge(struct Node2* a, struct Node2* b);
 void FrontBackSplit(struct Node2* source, struct Node2** frontRef, struct Node2** backRef);
 void push(struct Node2** head_ref, int A, int B, float weight);
-void append(struct Node2** head_ref, int A, int B, float weight);
 void display2();
 
 
