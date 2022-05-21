@@ -52,7 +52,7 @@ int main(void){
     //==============================//
     
     //Algoritmoaren exekuzioa:
-    printf("\nPrim ejekutatzen ari da:: \n");
+    printf("\nPrim exekutatzen ari da: \n");
     printf("========= \n\n");
     prim();
     printf("========= \n");
@@ -77,7 +77,7 @@ int main(void){
     //================================================//
 
     //Algoritmoaren exekuzioa:  
-    printf("\nKruskal ejekutatzen ari da:: \n");
+    printf("\nKruskal exekutatzen ari da: \n");
     printf("========= \n\n");
     kruskal();
     printf("========= \n");
@@ -96,7 +96,7 @@ int main(void){
 //Aukera menua
 void menu(){
     int aukera;
-    printf("\n\n zein fitxategi nahi duzu ireki?: \n");
+    printf("\n\n Sartu ireki erabili nahi duzun fitxategiaren zenbakia: \n");
     printf("    1- grafoak/gp_7n16a.txt\n");
     printf("    2- grafoak/gp_9n36a.txt\n");
     printf("    3- grafoak/gp_100n1000a.txt\n");
@@ -150,7 +150,7 @@ void prim(){
     int nodoKop = in(filename);   
     t = clock() - t;
     float time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("fitxategitik datuak irakurtzeko:         ~~~ >  %f segundu \n\n", time_taken);
+    printf("Fitxategitik datuak irakurtzeko:         ~~~ >  %f segundu \n\n", time_taken);
 
     // 2- Algoritmoareren exekuzioa
     t = clock();
@@ -158,7 +158,7 @@ void prim(){
     PRIM(nodoKop,hzm);
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("prim algoritmoa exekutatzeko:            ~~~ >  %f segundu \n\n", time_taken);
+    printf("Prim algoritmoa exekutatzeko:            ~~~ >  %f segundu \n\n", time_taken);
     
     // 3- Emaitzen OutPut-a:
     t = clock();
@@ -170,7 +170,7 @@ void prim(){
     fclose(out);
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("lortutako datuak fitxategian idazteko:   ~~~ >  %f segundu \n\n", time_taken);
+    printf("Lortutako datuak fitxategian idazteko:   ~~~ >  %f segundu \n\n", time_taken);
 
     
 }
@@ -189,14 +189,14 @@ void kruskal(){
     in2(filename);   
     t = clock() - t;
     float time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("fitxategitik datuak irakurtzeko:         ~~~ >  %f segundu \n\n", time_taken);
+    printf("Fitxategitik datuak irakurtzeko:         ~~~ >  %f segundu \n\n", time_taken);
 
     // 2- Algoritmoareren exekuzioa
     t = clock();
     KRUSKAL();
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("kruskal algoritmoa exekutatzeko:         ~~~ >  %f segundu \n\n", time_taken);
+    printf("Kruskal algoritmoa exekutatzeko:         ~~~ >  %f segundu \n\n", time_taken);
 
     // 3- Emaitzen OutPut-a:
     t = clock();
@@ -210,7 +210,7 @@ void kruskal(){
     fclose(out);
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("lortutako datuak fitxategian idazteko:   ~~~ >  %f segundu \n\n", time_taken);
+    printf("Lortutako datuak fitxategian idazteko:   ~~~ >  %f segundu \n\n", time_taken);
 
 }
 
