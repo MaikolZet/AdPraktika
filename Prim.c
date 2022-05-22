@@ -92,9 +92,11 @@ void PRIM (int p, ertzPisuPos hzm []){
         PisuMin[k]= -1;   //  O(1)
         for (z=1; z<p; z++ ){  //  O(A)
             
-            if (1/mysearchElement(k,z) < PisuMin[z]){  //  O(1)
-                PisuMin[z]= 1/mysearchElement(k, z);   //  O(1)
-                Auzokide[z]=k;    //  O(1)
+            float lag = 1/mysearchElement(k,z); //  O(K/A)
+
+            if (lag < PisuMin[z]){ //  O(1)
+                PisuMin[z]= lag;   //  O(1)
+                Auzokide[z]=k;     //  O(1)
             }
         }
     }
