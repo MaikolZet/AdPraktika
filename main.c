@@ -151,7 +151,6 @@ void menu(){
 void prim(){
     
     //Output fitxategiaren hasieraketa
-    int num;
     FILE *out=fopen("prim_out.txt","w");
     if(out == NULL){printf("Error!");exit(1);} 
 
