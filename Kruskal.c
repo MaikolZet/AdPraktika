@@ -7,8 +7,13 @@
 // METROPOLISA
 
 /*
-PisuenGoranzkoOrdenaJarraituzOrdenatu(G, a, gEO); eginda ekarri
-ertzOrdenatuak--> ertzen zerrenda ordenatua pisuarekiko
+Memoria-estra:
+    - Ω(a) lista_kruskal--> ertzen lista dinamikoa ordenatua pisuarekiko handienetik txikienera
+    - O(a) Emaitza--> gehienez ertz guztiak izango dituen lista dinamikoa
+    - Ω(1) azkena--> emaitzen listaren amaiera gordetzen duen nodoa
+    - Ω(1) berri--> emaitzen listan sartu beharreko nodo berria 
+    - Ω(2) ema--> ertz eta erpin kopuru totala gordetzen dituen bektorea
+    - Ω(p) Partiketa[p]--> partiketa bektorea, erpin kopurua izango da luzeera
 */
 extern int ema[];
 extern Node2* lista_kruskal;
@@ -18,61 +23,70 @@ struct Node2* azkena;
 struct Node2* berri;
 
 int sErtzKop;
-int pisuMet;
 int lehena=0;
 
-double baturaKruskal=0;
+double baturaKruskal;
 
 
 void KRUSKAL()
-{   
-    struct Node2 * ertzOrdenatuak = (Node2 *)malloc(sizeof(Node2));
-    ertzOrdenatuak->A= lista_kruskal->A;
-    ertzOrdenatuak->B= lista_kruskal->B;
-    ertzOrdenatuak->weight= lista_kruskal->weight;
-    ertzOrdenatuak->next= lista_kruskal->next;
-    
-    int erpinKop=ema[0];
-    int ertzKop=ema[1];
-    sErtzKop = 0;
-    pisuMet = 0;
-
+{   //Erazagupenak
     int xBarne, yBarne, erpinx, erpiny;
     float pisua;
+    /*Hasieraketak*/
+    /*KOSTUAK: Konstanteak dira*/
+    int erpinKop=ema[0]; //p
+    sErtzKop = 0;
+    baturaKruskal = 0;
+
+    //Partiketa erazagutu
+    int Partiketa[erpinKop];
 
     //Hasieratu partiketa {-1, -1, ... , -1} izan dadin memorian
-    int Partiketa[erpinKop];
-    //ZAHARRA
-    //memset(Partiketa, -1, erpinKop*sizeof(int));
-    //BERRIA: Ustet horrela egin dela (lo he mirao en gologolo)
+    //KOSTUA: O(p), p izanik erpin kopurua
     for (int index = 0; index < erpinKop; index++){Partiketa[index]=-1;}
     
-    while (sErtzKop != ertzKop - 1 && ertzOrdenatuak!=NULL)
+    /*
+    Begizta honetan partiketa garatzen da, ertz guztiak iteratuz eta emaitzan sartu daitezken konprobatuz.
+    KOSTUA:Ertz guztiak iteratuko ditu Ω(a)
+    sErtzKop != ertzKop - 1  baldintza algoritmoan agertzen da, baina gure  
+    kasuan lista dinamikoa amaitzearen baliokide da
+    */
+    while (lista_kruskal!=NULL)
     {    
-        //Nodoa iteratu, hurrengoa eta hurrengoa lortu arte.NULL izan arte.
-        //Horrela lortu dezakgu listako hurrengo ertz pisu gutxienekoa, bere ezaugarri guztiekin. Pisua baita!
-        //Denbora kostu minimoarekin
-        erpinx = ertzOrdenatuak->A;
-        erpiny = ertzOrdenatuak->B;
-        pisua = ertzOrdenatuak->weight;
+        
+        /*Horrela lortu ditugu listako hurrengo ertzen informazioa*/
+        erpinx = lista_kruskal->A;
+        erpiny = lista_kruskal->B;
+        pisua = lista_kruskal->weight;
 
+        /*Emandako erpina emanda etiketa  lortu.
+        KOSTUA: O(p)*/
         xBarne = BILATU3(Partiketa, erpinx);
         yBarne = BILATU3(Partiketa, erpiny);
 
+        /*Etiketak berdinak badira zikloa dagoela esan nahi du*/
         if (yBarne != xBarne)
         {
+            /*Bi erpinen etiketak emanda, konparatu eta dagokion aldaketa egin partiketan*/
+            /*KOSTUA: Konstantea da*/
             BATERATU3(Partiketa, xBarne, yBarne);
+            /*Ertza emaitzan gehitu*/
+            /*KOSTUA: Konstantea da*/
             ErantsiErt(sErtzKop, erpinx, erpiny, pisua);
+            /*Emaitzako ertz kopuruan +1 egin*/
+            /*KOSTUA: Konstantea da*/
             sErtzKop++;
-            pisuMet += pisua;
+            /*Emaitzaren pisu metatuari gehitu momentuko ertzaren pisua*/
+            /*KOSTUA: Konstantea da*/
+            baturaKruskal += pisua;
         }      
-        ertzOrdenatuak=ertzOrdenatuak->next;
+        /*Nodoa iteratu, hurrengoa eta hurrengoa lortu arte.NULL izan arte.*/
+        lista_kruskal=lista_kruskal->next;
     }
 
 }
 
-//KRUSKAL funtzioko emaitz aldagaian egin behar dira aldaketak
-//C-n ez dakidanez programatzen ez dakit modu hontan gordeko diren behar diren aldaketak.
+//Emaitzean gordetzen du emandako ertza, nodo berriak sortu behar bada.
 void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
 {   
     if (Emaitza==NULL){
@@ -83,7 +97,6 @@ void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
         Emaitza->weight=pisua;
         Emaitza->next= NULL;
         azkena = Emaitza;
-        baturaKruskal+=Emaitza->weight;
     }else{
         berri = (struct Node2*)malloc(sizeof(Node2));
         berri->A=erpinx;
@@ -92,11 +105,12 @@ void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
         berri->next = NULL;
         azkena->next= berri;
         azkena = berri;
-        baturaKruskal+=berri->weight;
     }
 }
 
-
+/*Partiketan erpinaren sakonera bilatzen du. Etiketa bat badu ordea, etiketa horren
+partiketako posiziora joango da eta gauza bera egingo du sakonera aurkitu arte.
+Azkenik, sakoneradun erpinaren etiketa bueltatu.*/
 int BILATU3(int partiketa[], int erpin){
     int etiketa = erpin;
     while (partiketa[etiketa]>=0)
@@ -106,11 +120,14 @@ int BILATU3(int partiketa[], int erpin){
     return etiketa;
 }
 
-//Funtzioak KRUSKAL funtzioko Partiketa array-ean egin behar ditu aldaketak
-//Ez dakit erreferentzia pasata ondo egiten duen. 
+/*
+Bi erpinen etiketak emanda, konparatu eta dagokion aldaketa egin partiketan:
+    - Erpinen sakonerak berdinak badira lehen erpinari sakonera handitu eta bigarrenari lehen erpinaren etiketa esleitzen dio
+    - Bestela, sakonera txikiena duen erpinari esleitzen diot sakonera handiena duen erpinaren etiketa
+*/
 void BATERATU3(int partiketa[], int erpinx, int erpiny){
-    int x = partiketa[erpinx];
-    int y = partiketa[erpiny];
+    int x = partiketa[erpinx]; //sakonera x erpinarena
+    int y = partiketa[erpiny]; //sakonera y erpinarena
     if (x == y)
     {
         partiketa[erpinx]--;
@@ -122,6 +139,4 @@ void BATERATU3(int partiketa[], int erpinx, int erpiny){
     {
         partiketa[erpinx] = erpiny;
     }
-    
-    
 }
