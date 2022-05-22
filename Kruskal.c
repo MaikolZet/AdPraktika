@@ -23,10 +23,9 @@ struct Node2* azkena;
 struct Node2* berri;
 
 int sErtzKop;
-int pisuMet;
 int lehena=0;
 
-double baturaKruskal=0;
+double baturaKruskal;
 
 
 void KRUSKAL()
@@ -36,9 +35,8 @@ void KRUSKAL()
     /*Hasieraketak*/
     /*KOSTUAK: Konstanteak dira*/
     int erpinKop=ema[0]; //p
-    int ertzKop=ema[1]; //a
     sErtzKop = 0;
-    pisuMet = 0;
+    baturaKruskal = 0;
 
     //Partiketa erazagutu
     int Partiketa[erpinKop];
@@ -80,7 +78,7 @@ void KRUSKAL()
             sErtzKop++;
             /*Emaitzaren pisu metatuari gehitu momentuko ertzaren pisua*/
             /*KOSTUA: Konstantea da*/
-            pisuMet += pisua;
+            baturaKruskal += pisua;
         }      
         /*Nodoa iteratu, hurrengoa eta hurrengoa lortu arte.NULL izan arte.*/
         lista_kruskal=lista_kruskal->next;
@@ -99,7 +97,6 @@ void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
         Emaitza->weight=pisua;
         Emaitza->next= NULL;
         azkena = Emaitza;
-        baturaKruskal+=Emaitza->weight;
     }else{
         berri = (struct Node2*)malloc(sizeof(Node2));
         berri->A=erpinx;
@@ -108,7 +105,6 @@ void ErantsiErt(int k, int erpinx, int erpiny, float pisua)
         berri->next = NULL;
         azkena->next= berri;
         azkena = berri;
-        baturaKruskal+=berri->weight;
     }
 }
 
