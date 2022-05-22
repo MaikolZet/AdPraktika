@@ -8,12 +8,12 @@
 
 /*
 Memoria-estra:
-    - Ω(a) lista_kruskal--> ertzen lista dinamikoa ordenatua pisuarekiko handienetik txikienera
+    - Θ(a) lista_kruskal--> ertzen lista dinamikoa ordenatua pisuarekiko handienetik txikienera
     - O(a) Emaitza--> gehienez ertz guztiak izango dituen lista dinamikoa
-    - Ω(1) azkena--> emaitzen listaren amaiera gordetzen duen nodoa
-    - Ω(1) berri--> emaitzen listan sartu beharreko nodo berria 
-    - Ω(2) ema--> ertz eta erpin kopuru totala gordetzen dituen bektorea
-    - Ω(p) Partiketa[p]--> partiketa bektorea, erpin kopurua izango da luzeera
+    - Θ(1) azkena--> emaitzen listaren amaiera gordetzen duen nodoa
+    - Θ(1) berri--> emaitzen listan sartu beharreko nodo berria 
+    - Θ(2) ema--> ertz eta erpin kopuru totala gordetzen dituen bektorea
+    - Θ(p) Partiketa[p]--> partiketa bektorea, erpin kopurua izango da luzeera
 */
 extern int ema[];
 extern Node2* lista_kruskal;
@@ -47,7 +47,7 @@ void KRUSKAL()
     
     /*
     Begizta honetan partiketa garatzen da, ertz guztiak iteratuz eta emaitzan sartu daitezken konprobatuz.
-    KOSTUA:Ertz guztiak iteratuko ditu Ω(a)
+    KOSTUA:Ertz guztiak iteratuko ditu Θ(a)
     sErtzKop != ertzKop - 1  baldintza algoritmoan agertzen da, baina gure  
     kasuan lista dinamikoa amaitzearen baliokide da
     */
