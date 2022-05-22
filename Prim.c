@@ -49,6 +49,7 @@ void PRIM (int p, ertzPisuPos hzm []){
     //Hasieraketak
     int k, j, z, sLuz=0;  // O(1) 
     float minP=0.0;       // O(1)
+    float lag;
     
     //Lehen erpina kanpoan hasieratu
     PisuMin[0]=-1;    // O(1)    
@@ -92,7 +93,7 @@ void PRIM (int p, ertzPisuPos hzm []){
         PisuMin[k]= -1;   //  O(1)
         for (z=1; z<p; z++ ){  //  O(A)
             
-            float lag = 1/mysearchElement(k,z); //  O(K/A)
+            lag = 1/mysearchElement(k,z); //  O(K/A)
 
             if (lag < PisuMin[z]){ //  O(1)
                 PisuMin[z]= lag;   //  O(1)
